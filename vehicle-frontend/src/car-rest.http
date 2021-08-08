@@ -1,0 +1,8 @@
+GET http://localhost:8080/api/owner/2
+Accept: application/json
+
+###
+GET http://localhost:8080/api/car-rest
+Accept: application/json
+
+###
