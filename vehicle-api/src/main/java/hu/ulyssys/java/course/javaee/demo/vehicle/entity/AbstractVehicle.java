@@ -28,7 +28,6 @@ public abstract class AbstractVehicle extends AbstractEntity implements VehicleT
     public AbstractVehicle() {
     }
 
-
     public Long getId() {
         return id;
     }

@@ -63,7 +63,7 @@
         </p:column>
         <p:column headerText="Funkció gombok" exportable="false">
             <p:commandButton id="delete" icon="pi pi-times" process="@this" value="Törlés"
-                             actionListener="#{carCRUDMbean.remove(car)}"
+                             actionListener="#{carCRUDMbean.remove()}"
                              update="@form">
                 <p:confirm header="Törlés" message="Biztos vagy benne?" icon="pi pi-times"/>
             </p:commandButton>
@@ -82,23 +82,23 @@
         <p:panelGrid layout="grid" columns="2" id="formPanel" style="width:400px" rendered="#{carCRUDMbean.inFunction}">
             <p:outputLabel value="Gyártó"/>
             <p:inputText required="true" requiredMessage="Gyártó kötelező"
-                         value="#{carCRUDMbean.selectedCar.manufacturer}"/>
+                         value="#{carCRUDMbean.selectedEntity.manufacturer}"/>
 
             <p:outputLabel value="Típus"/>
-            <p:inputText required="true" requiredMessage="Típus kötelező" value="#{carCRUDMbean.selectedCar.type}"/>
+            <p:inputText required="true" requiredMessage="Típus kötelező" value="#{carCRUDMbean.selectedEntity.type}"/>
 
             <p:outputLabel value="Rendszám"/>
             <p:inputText required="true" requiredMessage="Rendszám kötelező"
-                         value="#{carCRUDMbean.selectedCar.licensePlateNumber}"/>
+                         value="#{carCRUDMbean.selectedEntity.licensePlateNumber}"/>
 
             <p:outputLabel value="Ajtók száma"/>
             <p:inputNumber required="true" requiredMessage="Ajtók száma kötelező" thousandSeparator="" decimalPlaces="0"
-                           value="#{carCRUDMbean.selectedCar.doorNumbers}"/>
+                           value="#{carCRUDMbean.selectedEntity.doorNumbers}"/>
 
             <p:outputLabel value="Tulajdonos"/>
-            <p:selectOneMenu value="#{carCRUDMbean.selectedCarOwnerId}"  >
+            <p:selectOneMenu value="#{carCRUDMbean.selectedEntity.owner}" converter="#{appOwnerConverter}" >
                 <f:selectItem itemValue="#{null}" itemLabel="Kérem válasszon"/>
-                <f:selectItems value="#{carCRUDMbean.ownerList}" var="owner" itemLabel="#{owner.firstName} #{owner.lastName} #{owner.id}" itemValue="#{owner.id}"/>
+                <f:selectItems value="#{carCRUDMbean.ownerList}" var="owner" itemLabel="#{owner.firstName} #{owner.lastName} #{owner.id}" itemValue="#{owner}"/>
             </p:selectOneMenu>
 
             <p:commandButton value="#{msg['app.save']}" icon="pi pi-save" actionListener="#{carCRUDMbean.save()}"
@@ -117,7 +117,7 @@
     <!-- 2. inplace edit plane-en -->
     <!-- 3. Felugró ablakos űrlapot külön formmal -->
     <!-- 4. nyelvesítés-->
-</h:form>
 
+</h:form>
 </body>
 </html>

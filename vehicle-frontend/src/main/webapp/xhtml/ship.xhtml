@@ -19,14 +19,14 @@
                              actionListener="#{shipCRUDMbean.initSave}" update="@([id$=shipForm])"
                              oncomplete="PF('shipDialog').show()"/>
 
-            <p:commandButton disabled="#{shipCRUDMbean.selectedShip.id==null}" id="delete" icon="pi pi-times"
+            <p:commandButton disabled="#{shipCRUDMbean.selectedEntity.id==null}" id="delete" icon="pi pi-times"
                              process="@this" value="Törlés"
                              actionListener="#{shipCRUDMbean.remove}"
                              update="@form">
                 <p:confirm header="Törlés" message="Biztos vagy benne?" icon="pi pi-times"/>
             </p:commandButton>
             <!-- Hákolt, de müködő megoldás @([id$=formPanel]) -->
-            <p:commandButton id="update" disabled="#{shipCRUDMbean.selectedShip.id==null}" process="@this"
+            <p:commandButton id="update" disabled="#{shipCRUDMbean.selectedEntity.id==null}" process="@this"
                              value="Módosítás" icon="pi pi-pencil" oncomplete="PF('shipDialog').show()"
                              actionListener="#{shipCRUDMbean.initEdit}" update="@([id$=shipForm])"/>
         </p:toolbarGroup>
@@ -51,7 +51,7 @@
 
 
     <p:dataTable id="table" value="#{shipCRUDMbean.list}" var="ship" rows="10"
-                 selectionMode="single" selection="#{shipCRUDMbean.selectedShip}" rowKey="#{ship.id}"
+                 selectionMode="single" selection="#{shipCRUDMbean.selectedEntity}" rowKey="#{ship.id}"
                  paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
@@ -96,17 +96,17 @@
                      rendered="#{shipCRUDMbean.inFunction}">
             <p:outputLabel value="Gyártó"/>
             <p:inputText required="true" requiredMessage="Gyártó kötelező"
-                         value="#{shipCRUDMbean.selectedShip.manufacturer}"/>
+                         value="#{shipCRUDMbean.selectedEntity.manufacturer}"/>
 
             <p:outputLabel value="Típus"/>
-            <p:inputText required="true" requiredMessage="Típus kötelező" value="#{shipCRUDMbean.selectedShip.type}"/>
+            <p:inputText required="true" requiredMessage="Típus kötelező" value="#{shipCRUDMbean.selectedEntity.type}"/>
 
             <p:outputLabel value="Rendszám"/>
             <p:inputText thousandSeparator="" decimalPlaces="0" required="true" requiredMessage="Utasok száma"
-                         value="#{shipCRUDMbean.selectedShip.licensePlateNumber}"/>
+                         value="#{shipCRUDMbean.selectedEntity.licensePlateNumber}"/>
             <p:outputLabel value="Ajtók száma"/>
 
-            <p:selectOneMenu value="#{shipCRUDMbean.selectedShip.owner}" converter="#{appOwnerConverter}" >
+            <p:selectOneMenu value="#{shipCRUDMbean.selectedEntity.owner}" converter="#{appOwnerConverter}" >
                 <f:selectItem itemValue="#{null}" itemLabel="Kérem válasszon"/>
                 <f:selectItems value="#{shipCRUDMbean.ownerList}" var="owner" itemLabel="#{owner.firstName}" itemValue="#{owner}"/>
             </p:selectOneMenu>

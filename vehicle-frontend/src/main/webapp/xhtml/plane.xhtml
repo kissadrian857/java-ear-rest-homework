@@ -18,14 +18,14 @@
             <p:commandButton id="add" icon="pi pi-plus" process="@this" value="Új hozzáadása"
                              actionListener="#{planeCRUDMbean.initSave}" update="@form"/>
 
-            <p:commandButton disabled="#{planeCRUDMbean.selectedPlane.id==null}" id="delete" icon="pi pi-times"
+            <p:commandButton disabled="#{planeCRUDMbean.selectedEntity.id==null}" id="delete" icon="pi pi-times"
                              process="@this" value="Törlés"
                              actionListener="#{planeCRUDMbean.remove}"
                              update="@form">
                 <p:confirm header="Törlés" message="Biztos vagy benne?" icon="pi pi-times"/>
             </p:commandButton>
             <!-- Hákolt, de müködő megoldás @([id$=formPanel]) -->
-            <p:commandButton id="update" disabled="#{planeCRUDMbean.selectedPlane.id==null}" process="@this" value="Módosítás" icon="pi pi-pencil"
+            <p:commandButton id="update" disabled="#{planeCRUDMbean.selectedEntity.id==null}" process="@this" value="Módosítás" icon="pi pi-pencil"
                              actionListener="#{planeCRUDMbean.initEdit}" update=":form:formPanelHolder"/>
         </p:toolbarGroup>
 
@@ -49,7 +49,7 @@
 
 
     <p:dataTable id="table" value="#{planeCRUDMbean.list}" var="plane" rows="10"
-                 selectionMode="single" selection="#{planeCRUDMbean.selectedPlane}" rowKey="#{plane.id}"
+                 selectionMode="single" selection="#{planeCRUDMbean.selectedEntity}" rowKey="#{plane.id}"
                  paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
@@ -86,17 +86,17 @@
                      rendered="#{planeCRUDMbean.inFunction}">
             <p:outputLabel value="Gyártó"/>
             <p:inputText required="true" requiredMessage="Gyártó kötelező"
-                         value="#{planeCRUDMbean.selectedPlane.manufacturer}"/>
+                         value="#{planeCRUDMbean.selectedEntity.manufacturer}"/>
 
             <p:outputLabel value="Típus"/>
-            <p:inputText required="true" requiredMessage="Típus kötelező" value="#{planeCRUDMbean.selectedPlane.type}"/>
+            <p:inputText required="true" requiredMessage="Típus kötelező" value="#{planeCRUDMbean.selectedEntity.type}"/>
 
             <p:outputLabel value="Rendszám"/>
             <p:inputNumber thousandSeparator="" decimalPlaces="0" required="true" requiredMessage="Utasok száma"
-                           value="#{planeCRUDMbean.selectedPlane.passengerNumber}"/>
+                           value="#{planeCRUDMbean.selectedEntity.passengerNumber}"/>
 
             <p:outputLabel value="Tulajdonos"/>
-            <p:selectOneMenu value="#{planeCRUDMbean.selectedPlane.owner}" converter="#{appOwnerConverter}" >
+            <p:selectOneMenu value="#{planeCRUDMbean.selectedEntity.owner}" converter="#{appOwnerConverter}" >
                 <f:selectItem itemValue="#{null}" itemLabel="Kérem válasszon"/>
                 <f:selectItems value="#{planeCRUDMbean.ownerList}" var="owner" itemLabel="#{owner.firstName}" itemValue="#{owner}"/>
             </p:selectOneMenu>

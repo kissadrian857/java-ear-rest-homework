@@ -3,40 +3,34 @@ package hu.ulyssys.java.course.javaee.demo.vehicle.dao.impl;
 import hu.ulyssys.java.course.javaee.demo.vehicle.dao.OwnerDAO;
 import hu.ulyssys.java.course.javaee.demo.vehicle.entity.Owner;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.ejb.Stateless;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
-@ApplicationScoped
-public class OwnerDAOImpl implements OwnerDAO {
-
-    @PersistenceContext(unitName = "TestPersistence")
-    private EntityManager entityManager;
+@Stateless
+public class OwnerDAOImpl extends CoreDAOImpl<Owner> implements OwnerDAO {
 
     @Override
-    public List<Owner> findAll() {
-        return entityManager.createQuery("select o from Owner o order by o.id", Owner.class).getResultList();
+    public Owner findByName(String firstName, String lastName) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Owner> criteriaQuery = criteriaBuilder.createQuery(Owner.class);
+        Root<Owner> root = criteriaQuery.from(Owner.class);
+        criteriaQuery.select(root).where(criteriaBuilder.and(criteriaBuilder.equal(root.get("firstName"), firstName),
+                criteriaBuilder.equal(root.get("lastName"), lastName)));
+        TypedQuery<Owner> query = entityManager.createQuery(criteriaQuery);
+
+        List<Owner> list = query.getResultList();
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
     }
 
     @Override
-    public Owner findById(Long id) {
-        return entityManager.find(Owner.class, id);
-    }
-
-    @Override
-    public Owner persist(Owner owner) {
-        entityManager.persist(owner);
-        return owner;
-    }
-
-    @Override
-    public Owner update(Owner owner) {
-        return entityManager.merge(owner);
-    }
-
-    @Override
-    public void delete(Owner owner) {
-        entityManager.remove(findById(owner.getId()));
+    protected Class<Owner> getManagedClass() {
+        return Owner.class;
     }
 }

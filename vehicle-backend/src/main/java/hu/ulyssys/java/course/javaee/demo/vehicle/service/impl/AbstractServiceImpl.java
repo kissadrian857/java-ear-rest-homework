@@ -1,24 +1,45 @@
 package hu.ulyssys.java.course.javaee.demo.vehicle.service.impl;
 
+import hu.ulyssys.java.course.javaee.demo.vehicle.dao.CoreDAO;
+import hu.ulyssys.java.course.javaee.demo.vehicle.entity.AbstractEntity;
 import hu.ulyssys.java.course.javaee.demo.vehicle.entity.AbstractVehicle;
+import hu.ulyssys.java.course.javaee.demo.vehicle.service.CoreService;
 
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 //Ezt nevezik generikus megoldásnak
-public abstract class AbstractServiceImpl<T extends AbstractVehicle> {
-    private List<T> list = new ArrayList<>();
+public abstract class AbstractServiceImpl<T extends AbstractEntity> implements CoreService<T> {
+    @Inject
+    protected CoreDAO<T> dao;
 
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    @Override
     public List<T> getAll() {
-        return list;
+        return dao.findAll();
     }
 
-    public void add(T vehicle) {
-        list.add(vehicle);
+    @Override
+    public void add(T entity) {
+        dao.save(entity);
     }
 
-    public void remove(T vehicle) {
-        list.remove(vehicle);
+    @Override
+    public void remove(T entity) {
+        dao.delete(entity.getId());
     }
 
+    @Override
+    public void update(T entity) {
+        dao.update(entity);
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    @Override
+    public T findById(Long id) {
+        return dao.findById(id);
+    }
 }

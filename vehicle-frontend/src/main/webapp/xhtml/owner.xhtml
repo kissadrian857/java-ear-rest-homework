@@ -61,7 +61,7 @@
 
         <p:column headerText="Funkció gombok" exportable="false">
             <p:commandButton id="delete" icon="pi pi-times" process="@this" value="Törlés"
-                             actionListener="#{ownerCRUDMbean.remove(owner)}"
+                             actionListener="#{ownerCRUDMbean.remove()}"
                              update="@form">
                 <p:confirm header="Törlés" message="Biztos vagy benne?" icon="pi pi-times"/>
             </p:commandButton>
