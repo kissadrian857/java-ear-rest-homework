@@ -7,9 +7,9 @@ import javax.persistence.*;
 public class Plane extends AbstractVehicle {
     @Column(name = "passenger_number")
     private int passengerNumber;
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private Owner owner;
+//    @ManyToOne
+//    @JoinColumn(name = "owner_id")
+//    private Owner owner;
 
     public int getPassengerNumber() {
         return passengerNumber;
@@ -17,14 +17,6 @@ public class Plane extends AbstractVehicle {
 
     public void setPassengerNumber(int passengerNumber) {
         this.passengerNumber = passengerNumber;
-    }
-
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
     }
 
     @Override

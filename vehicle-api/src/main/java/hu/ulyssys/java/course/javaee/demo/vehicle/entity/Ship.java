@@ -8,9 +8,9 @@ public class Ship extends AbstractVehicle {
 
     @Column(name = "license_plate_number")
     private String licensePlateNumber;
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private Owner owner;
+//    @ManyToOne
+//    @JoinColumn(name = "owner_id")
+//    private Owner owner;
 
     public String getLicensePlateNumber() {
         return licensePlateNumber;
@@ -18,14 +18,6 @@ public class Ship extends AbstractVehicle {
 
     public void setLicensePlateNumber(String licensePlateNumber) {
         this.licensePlateNumber = licensePlateNumber;
-    }
-
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
     }
 
     @Override

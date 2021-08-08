@@ -3,7 +3,7 @@ package hu.ulyssys.java.course.javaee.demo.vehicle.entity;
 import javax.persistence.*;
 
 @MappedSuperclass
-public abstract class AbstractVehicle implements VehicleTypeAware {
+public abstract class AbstractVehicle extends AbstractEntity implements VehicleTypeAware {
     // long - 0 primitive
     // Long - null referencia/objektum típusú
     @Id
@@ -13,15 +13,21 @@ public abstract class AbstractVehicle implements VehicleTypeAware {
     private String manufacturer;
     @Column(name = "type")
     private String type;
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
 
     public AbstractVehicle() {
     }
 
-    public AbstractVehicle(Long id, String manufacturer, String type) {
-        this.id = id;
-        this.manufacturer = manufacturer;
-        this.type = type;
-    }
 
     public Long getId() {
         return id;

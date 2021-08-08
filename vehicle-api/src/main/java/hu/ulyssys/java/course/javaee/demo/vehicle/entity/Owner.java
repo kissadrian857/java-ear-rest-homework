@@ -2,15 +2,12 @@ package hu.ulyssys.java.course.javaee.demo.vehicle.entity;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "vehicle_owner")
-public class Owner {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Owner extends AbstractEntity {
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "first_name")
@@ -25,14 +22,6 @@ public class Owner {
     private Set<Plane> planes;
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private Set<Ship> ships;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getLastName() {
         return lastName;
@@ -82,25 +71,25 @@ public class Owner {
         this.ships = ships;
     }
 
+    //TODO change the definition to contain the id component of the superclass
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Owner owner = (Owner) o;
-
-        if (id != null ? !id.equals(owner.id) : owner.id != null) return false;
-        if (lastName != null ? !lastName.equals(owner.lastName) : owner.lastName != null) return false;
-        if (firstName != null ? !firstName.equals(owner.firstName) : owner.firstName != null) return false;
-        return registrationDate != null ? registrationDate.equals(owner.registrationDate) : owner.registrationDate == null;
+        if (getId() != null ? !getId().equals(owner.getId()) : owner.getId() != null) return false;
+        return firstName != null ? firstName.equals(owner.firstName) : owner.firstName == null &&
+                lastName != null ? lastName.equals(owner.lastName) : owner.lastName == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (registrationDate != null ? registrationDate.hashCode() : 0);
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0) +
+                (lastName != null ? lastName.hashCode() : 0);
         return result;
     }
 }
