@@ -1,19 +1,14 @@
 package hu.ulyssys.java.course.javaee.demo.vehicle.rest.model;
 
-import hu.ulyssys.java.course.javaee.demo.vehicle.entity.Car;
-import hu.ulyssys.java.course.javaee.demo.vehicle.entity.Plane;
-import hu.ulyssys.java.course.javaee.demo.vehicle.entity.Ship;
-
-import javax.ws.rs.core.GenericEntity;
-import java.util.Set;
+import java.util.List;
 
 public class OwnerModel {
     private Long id;
     private String firstName;
     private String lastName;
-    private GenericEntity<Set<Car>> cars;
-    private GenericEntity<Set<Ship>> ships;
-    private GenericEntity<Set<Plane>> planes;
+    private List<CarModel> cars;
+    private List<ShipModel> ships;
+    private List<PlaneModel> planes;
 
     public Long getId() {
         return id;
@@ -39,27 +34,27 @@ public class OwnerModel {
         this.lastName = lastName;
     }
 
-    public GenericEntity<Set<Car>> getCars() {
+    public List<CarModel> getCars() {
         return cars;
     }
 
-    public void setCars(GenericEntity<Set<Car>> cars) {
+    public void setCars(List<CarModel> cars) {
         this.cars = cars;
     }
 
-    public GenericEntity<Set<Ship>> getShips() {
+    public List<ShipModel> getShips() {
         return ships;
     }
 
-    public void setShips(GenericEntity<Set<Ship>> ships) {
+    public void setShips(List<ShipModel> ships) {
         this.ships = ships;
     }
 
-    public GenericEntity<Set<Plane>> getPlanes() {
+    public List<PlaneModel> getPlanes() {
         return planes;
     }
 
-    public void setPlanes(GenericEntity<Set<Plane>> planes) {
+    public void setPlanes(List<PlaneModel> planes) {
         this.planes = planes;
     }
 }

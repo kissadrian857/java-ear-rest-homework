@@ -8,7 +8,7 @@ import javax.ws.rs.Path;
 @Path("/plane")
 public class PlaneRestService extends CoreRestService<Plane, PlaneModel> {
     @Override
-    protected PlaneModel createModelFromEntity(Plane entity) {
+    public PlaneModel createModelFromEntity(Plane entity) {
        PlaneModel model = initNewModel();
        model.setId(entity.getId());
        model.setManufacturer(entity.getManufacturer());
@@ -19,7 +19,7 @@ public class PlaneRestService extends CoreRestService<Plane, PlaneModel> {
     }
 
     @Override
-    protected PlaneModel initNewModel() {
+    public PlaneModel initNewModel() {
         return new PlaneModel();
     }
 }

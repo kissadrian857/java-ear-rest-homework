@@ -12,6 +12,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public abstract class CoreRestService<T extends AbstractVehicle, M extends CoreRestModel> {
     @Inject
@@ -30,8 +33,16 @@ public abstract class CoreRestService<T extends AbstractVehicle, M extends CoreR
         return Response.ok(createModelFromEntity(entity)).build();
     }
 
-    protected abstract M createModelFromEntity(T entity);
+    public abstract M createModelFromEntity(T entity);
 
-    protected abstract M initNewModel();
+    public abstract M initNewModel();
+
+    public List<M> getModelList(Set<T> set){
+        List<M> list = new ArrayList<>();
+        for(T entity : set){
+            list.add(createModelFromEntity(entity)) ;
+        }
+        return list;
+    }
 
 }

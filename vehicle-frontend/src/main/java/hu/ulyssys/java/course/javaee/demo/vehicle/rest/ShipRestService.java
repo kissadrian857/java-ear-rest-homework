@@ -8,7 +8,7 @@ import javax.ws.rs.Path;
 @Path("/ship")
 public class ShipRestService extends CoreRestService<Ship, ShipModel> {
     @Override
-    protected ShipModel createModelFromEntity(Ship entity) {
+    public ShipModel createModelFromEntity(Ship entity) {
         ShipModel model = initNewModel();
         model.setId(entity.getId());
         model.setType(entity.getType());
@@ -19,7 +19,7 @@ public class ShipRestService extends CoreRestService<Ship, ShipModel> {
     }
 
     @Override
-    protected ShipModel initNewModel() {
+    public ShipModel initNewModel() {
         return new ShipModel();
     }
 }

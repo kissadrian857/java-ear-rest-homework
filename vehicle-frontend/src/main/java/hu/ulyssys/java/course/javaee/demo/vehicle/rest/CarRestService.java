@@ -8,12 +8,12 @@ import javax.ws.rs.Path;
 @Path("/car-rest")
 public class CarRestService extends CoreRestService<Car, CarModel>{
     @Override
-    protected CarModel initNewModel() {
+    public CarModel initNewModel() {
         return new CarModel();
     }
 
     @Override
-    protected CarModel createModelFromEntity(Car entity) {
+    public CarModel createModelFromEntity(Car entity) {
         CarModel model = initNewModel();
         model.setId(entity.getId());
         model.setManufacturer(entity.getManufacturer());

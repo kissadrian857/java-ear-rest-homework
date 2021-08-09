@@ -1,6 +1,9 @@
 package hu.ulyssys.java.course.javaee.demo.vehicle.rest;
 
-import hu.ulyssys.java.course.javaee.demo.vehicle.entity.*;
+import hu.ulyssys.java.course.javaee.demo.vehicle.entity.Car;
+import hu.ulyssys.java.course.javaee.demo.vehicle.entity.Owner;
+import hu.ulyssys.java.course.javaee.demo.vehicle.entity.Plane;
+import hu.ulyssys.java.course.javaee.demo.vehicle.entity.Ship;
 import hu.ulyssys.java.course.javaee.demo.vehicle.rest.model.CoreRestModel;
 import hu.ulyssys.java.course.javaee.demo.vehicle.rest.model.OwnerModel;
 import hu.ulyssys.java.course.javaee.demo.vehicle.service.OwnerService;
@@ -10,7 +13,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,18 +50,16 @@ public class OwnerRestService {
     @Path("/data/{id}")
     public Response getOwnerData(@PathParam("id") Long id) {
         Owner owner = ownerService.findById(id);
+        if(owner == null){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         OwnerModel model = new OwnerModel();
         model.setId(owner.getId());
         model.setFirstName(owner.getFirstName());
         model.setLastName(owner.getLastName());
-        model.setCars(new GenericEntity<Set<Car>>(owner.getCars()) {
-        });
-        model.setPlanes(new GenericEntity<Set<Plane>>(owner.getPlanes()) {
-        });
-        model.setShips(new GenericEntity<Set<Ship>>(owner.getShips()) {
-        });
-//        return Response.ok(model).type(MediaType.APPLICATION_JSON_TYPE).build();
-        return Response.ok(new GenericEntity<OwnerModel>(model) {
-        }).build();
+        model.setCars(carRestService.getModelList(owner.getCars()));
+        model.setPlanes(planeRestService.getModelList(owner.getPlanes()));
+        model.setShips(shipRestService.getModelList(owner.getShips()));
+        return Response.ok(model).build();
     }
 }
